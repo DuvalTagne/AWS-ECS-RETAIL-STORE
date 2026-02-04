@@ -12,7 +12,7 @@ resource "aws_ecs_service" "ecs_service_retail" {
     container_port   = 8080
   }
     network_configuration {
-      assign_public_ip = true
+      assign_public_ip = var.requires_compatibilities=="FARGATE"?true:false
       security_groups = var.security_group
       subnets = var.subnet
     }
