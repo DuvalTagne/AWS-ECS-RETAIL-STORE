@@ -11,7 +11,7 @@ resource "aws_ecs_capacity_provider" "example" {
 
       network_configuration {
         subnets         = var.subnet
-        security_groups = ["${var.security_group}"]
+        security_groups = var.security_group
       }
 
       storage_configuration {
