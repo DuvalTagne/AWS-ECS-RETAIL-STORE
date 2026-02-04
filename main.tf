@@ -14,13 +14,13 @@ module "ecs" {
 module "iam-role-instance" {
   source="./modules/iamRole"
   role_name = "ecsInstanceRoleManagedInstance"
-  policies_to_attach = [data.aws_iam_policy.instance-role-policy]
+  policies_to_attach = [data.aws_iam_policy.instance-role-policy.json]
   assume_role_policy = data.aws_iam_policy_document.ecs_assume_role_policy.json
 }
 
 module "iam-role-infra" {
   source="./modules/iamRole"
   role_name = "ecsManagedInstanceInfrastructureRole"
-  policies_to_attach = [data.aws_iam_policy.infra-role-policy,data.aws_iam_policy.infra-role-volume-policy]
+  policies_to_attach = [data.aws_iam_policy.infra-role-policy.json,data.aws_iam_policy.infra-role-volume-policy.json]
   assume_role_policy = data.aws_iam_policy_document.ecs_assume_role_policy.json
 }
