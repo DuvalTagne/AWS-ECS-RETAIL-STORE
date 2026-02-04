@@ -1,4 +1,4 @@
-resource "aws_ecs_capacity_provider" "example" {
+resource "aws_ecs_capacity_provider" "this" {
   count=var.managed_instances==0?0:1
   name    = "${var.app-name}-managed-instances-cp"
   cluster = aws_ecs_cluster.cluster.name

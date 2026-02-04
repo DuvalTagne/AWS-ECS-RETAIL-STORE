@@ -3,7 +3,7 @@ resource "aws_ecs_service" "ecs_service_retail" {
   cluster         = aws_ecs_cluster.cluster.id
   task_definition = aws_ecs_task_definition.task_def.arn
   desired_count   = 2
-  launch_type = "FARGATE"
+  launch_type = var.requires_compatibilities=="FARGATE"?var.requires_compatibilities:"EC2"
   
 
   load_balancer {
@@ -16,4 +16,14 @@ resource "aws_ecs_service" "ecs_service_retail" {
       security_groups = var.security_group
       subnets = var.subnet
     }
+dynamic "capacity_provider_strategy" {
+    # Si var.type == "managed_instances", on crée une liste d'un élément pour activer le bloc
+    # Sinon, on donne une liste vide [], et le bloc ne sera pas généré.
+    for_each = var.requires_compatibilities=="MANAGED_INSTANCES" ? [1] : []
+
+    content {
+      capacity_provider = aws_ecs_capacity_provider.this.name
+      weight            = 1
+    }
+  }
 }

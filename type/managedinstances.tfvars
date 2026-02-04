@@ -1,0 +1,2 @@
+managed_instances="yess"
+requires_compatibilities="MANAGED_INSTANCES"
