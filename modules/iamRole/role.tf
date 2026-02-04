@@ -5,7 +5,7 @@ resource "aws_iam_role" "role" {
 }
 
 resource "aws_iam_policy_attachment" "policy_attach_role" {
-  
+  for_each = toset(var.policies_to_attach)
   name = "${var.role_name}-attachment"
   roles=aws_iam_role.role.name
   policy_arn = each.value

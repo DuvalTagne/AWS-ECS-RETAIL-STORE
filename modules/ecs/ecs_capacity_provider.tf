@@ -1,5 +1,5 @@
 resource "aws_ecs_capacity_provider" "example" {
-  count=0?var.managed_instances==0:1
+  count=var.managed_instances==0?0:1
   name    = "${var.app-name}-managed-instances-cp"
   cluster = aws_ecs_cluster.cluster.name
 
@@ -11,7 +11,7 @@ resource "aws_ecs_capacity_provider" "example" {
 
       network_configuration {
         subnets         = var.subnet
-        security_groups = ["${var.var.security_group}"]
+        security_groups = ["${var.security_group}"]
       }
 
       storage_configuration {
