@@ -5,3 +5,7 @@ variable "role_name" {
 
 variable "policies_to_attach" {  
 }
+
+variable "assume_role_policy" {
+  
+}
