@@ -7,7 +7,7 @@ resource "aws_ecs_capacity_provider" "example" {
     infrastructure_role_arn = var.infrastructure_role_arn
 
     instance_launch_template {
-      ec2_instance_profile_arn = aws_iam_instance_profile.ecs_instance_managed.arn[0]
+      ec2_instance_profile_arn = aws_iam_instance_profile.ecs_instance_managed.arn[count.index]
 
       network_configuration {
         subnets         = var.subnet
