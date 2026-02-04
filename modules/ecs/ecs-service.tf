@@ -22,7 +22,7 @@ dynamic "capacity_provider_strategy" {
     for_each = var.requires_compatibilities=="MANAGED_INSTANCES" ? [1] : []
 
     content {
-      capacity_provider = aws_ecs_capacity_provider.this.name
+      capacity_provider = aws_ecs_capacity_provider.this[0].name
       weight            = 1
     }
   }
