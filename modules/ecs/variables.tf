@@ -21,7 +21,7 @@ variable "requires_compatibilities" {
   default = "FARGATE"
 }
 
-variable "ec2_instance_profile_arn" {
+variable "ec2_instance_profile_role_name" {
 }
 
 variable "infrastructure_role_arn" {

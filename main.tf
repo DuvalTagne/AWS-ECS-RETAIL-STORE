@@ -6,8 +6,9 @@ module "ecs" {
   source = "./modules/ecs"
   security_group = ["${module.lb.sg_id}"]
   lb_target_group_arn = module.lb.lb-tg-arn
-  ec2_instance_profile_arn = module.iam-role-instance.role_arn
+  ec2_instance_profile_role_name = module.iam-role-instance.role_name
   infrastructure_role_arn = module.iam-role-infra.role_arn
+  managed_instances = "yess"
   //requires_compatibilities = "MANAGED_INSTANCES"
 }
 
