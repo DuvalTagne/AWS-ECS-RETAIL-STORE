@@ -21,7 +21,7 @@ resource "aws_ecs_capacity_provider" "example" {
   }
 }
 
-resource "aws_iam_isntance_profile" "ecs_instance_managed" {
+resource "aws_iam_instance_profile" "ecs_instance_managed" {
   count=var.managed_instances==0?0:1
   name="${var.ec2_instance_profile_role_name}Profile"
   role=var.ec2_instance_profile_role_name
