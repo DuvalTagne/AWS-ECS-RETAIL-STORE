@@ -1,7 +1,7 @@
 resource "aws_ecs_capacity_provider" "this" {
   count=var.managed_instances==0?0:1
   name    = "${var.app-name}-managed-instances-cp"
-
+cluster = aws_ecs_cluster.cluster.name
   managed_instances_provider {
     infrastructure_role_arn = var.infrastructure_role_arn
 
