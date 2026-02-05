@@ -16,7 +16,7 @@ module "iam-role-instance" {
   source="./modules/iamRole"
   role_name = "ecsInstanceRoleManagedInstance"
   policies_to_attach = [data.aws_iam_policy.instance-role-policy.arn]
-  assume_role_policy = data.aws_iam_policy_document.ec2_assume_role_policy.json
+  assume_role_policy = data.aws_iam_policy_document.ecs_assume_role_policy.json
 }
 
 module "iam-role-infra" {
