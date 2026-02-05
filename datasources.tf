@@ -8,21 +8,12 @@ data "aws_iam_policy" "infra-role-volume-policy" {
   name = "AmazonECSInfrastructureRolePolicyForVolumes"
 }
 
-data "aws_iam_policy_document" "ec2_assume_role_policy" {
+data "aws_iam_policy_document" "ec2_ecs_assume_role_policy" {
   statement {
     actions = [ "sts:AssumeRole" ]
     principals {
       type = "Service"
-      identifiers = [ "ec2.amazonaws.com" ]
-    }
-  }
-}
-data "aws_iam_policy_document" "ecs_assume_role_policy" {
-  statement {
-    actions = [ "sts:AssumeRole" ]
-    principals {
-      type = "Service"
-      identifiers = [ "ecs.amazonaws.com" ]
+      identifiers = [ "ec2.amazonaws.com" , "ecs.amazonaws.com"]
     }
   }
 }
