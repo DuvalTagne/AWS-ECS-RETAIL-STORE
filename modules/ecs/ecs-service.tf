@@ -26,4 +26,5 @@ dynamic "capacity_provider_strategy" {
       weight            = 1
     }
   }
+  depends_on = [ aws_ecs_capacity_provider.this ]
 }
