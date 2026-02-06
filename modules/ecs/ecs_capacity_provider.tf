@@ -24,26 +24,26 @@ cluster = aws_ecs_cluster.cluster.name
  
   }
 
-   dynamic "au" {
-  for_each = var.requires_compatibilities=="EC2"?[1]:[]
-  content {
-       infrastructure_role_arn = var.infrastructure_role_arn
+  #  dynamic "au" {
+  # for_each = var.requires_compatibilities=="EC2"?[1]:[]
+  # content {
+  #      infrastructure_role_arn = var.infrastructure_role_arn
 
-    instance_launch_template {
-      ec2_instance_profile_arn = aws_iam_instance_profile.ecs_instance_managed[count.index].arn
+  #   instance_launch_template {
+  #     ec2_instance_profile_arn = aws_iam_instance_profile.ecs_instance_managed[count.index].arn
 
-      network_configuration {
-        subnets         = var.subnet
-        security_groups = var.security_group
-      }
+  #     network_configuration {
+  #       subnets         = var.subnet
+  #       security_groups = var.security_group
+  #     }
 
-      storage_configuration {
-        storage_size_gib = 100
-      }
-    }
-  }
+  #     storage_configuration {
+  #       storage_size_gib = 100
+  #     }
+  #   }
+  # }
  
-  }
+  # }
 }
 
 resource "aws_iam_instance_profile" "ecs_instance_managed" {
