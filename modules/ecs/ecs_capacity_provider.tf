@@ -1,11 +1,10 @@
 resource "aws_ecs_capacity_provider" "this" {
-  count=var.instances==0?0:1
+  count=var.instances==0 && var.requires_compatibilities=="MANAGED_INSTANCES" ?0:1
   name    = "${var.app-name}-managed-instances-cp"
 cluster = aws_ecs_cluster.cluster.name
 
- dynamic "managed_instances_provider" {
-  for_each = var.requires_compatibilities=="MANAGED_INSTANCES"?[1]:[]
-  content {
+ managed_instances_provider {
+ 
        infrastructure_role_arn = var.infrastructure_role_arn
 
     instance_launch_template {
@@ -20,23 +19,26 @@ cluster = aws_ecs_cluster.cluster.name
         storage_size_gib = 100
       }
     }
-  }
+  
  
   }
 
-   dynamic "auto_scaling_group_provider" {
-  for_each = var.requires_compatibilities=="EC2"?[1]:[]
-  content {
+}
+resource "aws_ecs_capacity_provider" "this" {
+  count=var.instances==0 && var.requires_compatibilities=="EC2"?0:1
+  name    = "${var.app-name}-managed-instances-cp"
+
+   auto_scaling_group_provider{
+
     auto_scaling_group_arn = aws_autoscaling_group.this[0].arn
     managed_termination_protection = "ENABLED"
     managed_scaling {
       status = "ENABLED"
     }
-  }
+  
  
   }
 }
-
 resource "aws_autoscaling_group" "this" {
   count=var.requires_compatibilities=="EC2"?1:0
   min_size = 1
@@ -64,7 +66,7 @@ resource "aws_iam_instance_profile" "ecs_instance_managed" {
 
 
 resource "aws_ecs_cluster_capacity_providers" "this" {
-  count=var.instances==0 && var.requires_compatibilities=="MANAGED_INSTANCES"?0:1
+  count=var.instances==0 ?0:1
   cluster_name = aws_ecs_cluster.cluster.name
 
   capacity_providers = var.requires_compatibilities != "FARGATE" ? [aws_ecs_capacity_provider.this[0].name] : ["FARGATE"]
