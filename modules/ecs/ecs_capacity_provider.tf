@@ -64,7 +64,7 @@ resource "aws_iam_instance_profile" "ecs_instance_managed" {
 
 
 resource "aws_ecs_cluster_capacity_providers" "this" {
-  count=var.instances==0?0:1
+  count=var.instances==0 && var.requires_compatibilities=="MANAGED_INSTANCES"?0:1
   cluster_name = aws_ecs_cluster.cluster.name
 
   capacity_providers = var.requires_compatibilities != "FARGATE" ? [aws_ecs_capacity_provider.this[0].name] : ["FARGATE"]
