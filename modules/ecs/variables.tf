@@ -28,6 +28,6 @@ variable "infrastructure_role_arn" {
   
 }
 
-variable "managed_instances" {
+variable "instances" {
   default = 0
 }

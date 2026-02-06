@@ -12,14 +12,14 @@ resource "aws_ecs_service" "ecs_service_retail" {
     container_port   = 8080
   }
     network_configuration {
-      assign_public_ip = var.requires_compatibilities=="FARGATE"?true:false
+      assign_public_ip = var.requires_compatibilities=="FARGATE" || "MANAGED_INSTANCES"?true:false
       security_groups = var.security_group
       subnets = var.subnet
     }
 dynamic "capacity_provider_strategy" {
     # Si var.type == "managed_instances", on crée une liste d'un élément pour activer le bloc
     # Sinon, on donne une liste vide [], et le bloc ne sera pas généré.
-    for_each = var.requires_compatibilities=="MANAGED_INSTANCES" ? [1] : []
+    for_each = var.requires_compatibilities=="MANAGED_INSTANCES" || var.requires_compatibilities=="EC2"? [1] : []
 
     content {
       capacity_provider = aws_ecs_capacity_provider.this[0].name
